@@ -205,6 +205,28 @@ class Solution:
           union(u, v)
 </pre>
 
+<p class="text-center text-muted"><a href="https://leetcode.com/problems/graph-valid-tree/" target="_blank">https://leetcode.com/problems/graph-valid-tree/</a></p> 
+<pre>
+class Solution:
+  def validTree(self, n: int, edges: List[List[int]]) -> bool:
+      if len(edges) < n - 1:
+          return False
+      
+      f = list(range(n))
+      
+      def find(x):
+          if f[x] != x: f[x] = find(f[x])
+          return f[x]
+          
+      def union(x, y):
+          f[find(x)] = find(y)
+      
+      for u, v in edges:
+          if find(u) == find(v): return False
+          union(u, v)
+      return True
+</pre>
+
 </div>
       </div>
     </div>
