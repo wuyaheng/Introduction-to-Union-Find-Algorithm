@@ -209,8 +209,7 @@ class Solution:
 <pre>
 class Solution:
   def validTree(self, n: int, edges: List[List[int]]) -> bool:
-      if len(edges) < n - 1:
-          return False
+      if len(edges) < n - 1: return False
       
       f = list(range(n))
       
@@ -225,6 +224,34 @@ class Solution:
           if find(u) == find(v): return False
           union(u, v)
       return True
+</pre>
+
+<p class="text-center text-muted"><a href="https://leetcode.com/problems/count-unreachable-pairs-of-nodes-in-an-undirected-graph/" target="_blank">https://leetcode.com/problems/count-unreachable-pairs-of-nodes-in-an-undirected-graph/</a></p> 
+<pre>
+class Solution:
+  def countPairs(self, n: int, edges: List[List[int]]) -> int:
+      f = list(range(n))
+      
+      def find(x):
+          if f[x] != x: f[x] = find(f[x])
+          return f[x]
+      
+      def union(x, y):
+          f[find(x)] = find(y)
+          
+      for u, v in edges:
+          union(u, v)
+      
+      mp = defaultdict(int)
+      for i in range(n):
+          mp[find(i)] += 1
+      
+      ans, sm = 0, 0
+      for x in mp.values():
+          ans += sm * x
+          sm += x
+          
+      return ans
 </pre>
 
 </div>
