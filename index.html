@@ -254,6 +254,30 @@ class Solution:
       return ans
 </pre>
 
+<p class="text-center text-muted"><a href="https://leetcode.com/problems/connecting-cities-with-minimum-cost/" target="_blank">https://leetcode.com/problems/connecting-cities-with-minimum-cost/</a></p> 
+<pre>
+class Solution:
+  def minimumCost(self, n: int, connections: List[List[int]]) -> int:
+      f = list(range(n))
+      
+      def find(x):
+          if f[x] != x: f[x] = find(f[x])
+          return f[x]
+      
+      def union(x, y):
+          f[find(x)] = find(y)
+      
+      connections.sort(key = lambda x: x[2])
+      
+      ans = 0
+      for u, v, w in connections:
+          if find(u - 1) != find(v - 1):
+              union(u - 1, v - 1)
+              ans += w
+              
+      return ans if sum(f[i] == i for i in range(n)) == 1 else -1
+</pre>
+
 </div>
       </div>
     </div>
