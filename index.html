@@ -157,7 +157,7 @@ hr {
 <div class="container">
     <div id="blog">
       <div id="title">
-        <div class="pubdate">17 December 2022<hr/></div>
+        <div class="pubdate">26 December 2022<hr/></div>
         <h1>Introduction to Union-Find Algorithm</h1>
         <div class="byline">by Phoebe Yaheng Wu</div> 
         <!-- <div class="topic">Data</div> -->
@@ -169,22 +169,29 @@ hr {
       <!-- <a class="named_anchor" name="2549202418499648455"></a> -->
 <div id="article">
   <div id="content"> 
-
+<p>Union-find, also known as a disjoint-set data structure, is an algorithm that is used to keep track of groups of items. It provides two main operations: Find and Union.</p>
+<h6>Find:</h6>
+<p>The Find operation determines whether two items belong to the same group. For example, you might use the Find operation to determine whether two items are connected in a graph, or whether two items have the same root in a tree.</p>
 <pre>
 f = list(range(n))
 def find(x):
     if f[x] != x: f[x] = find(f[x])
     return f[x]
 
+f[x] : parent of x
+find(x) : highest parent of x
+</pre>
+
+<h6>Union:</h6>
+<p>The Union operation is used to merge two groups of items. For example, you might use the Union operation to merge two connected components in a graph, or to merge two subtrees in a tree.</p>
+<pre>
 def union(x, y):
     f[find(x)] = find(y)
 
-f[x] : parent of x
-find(x) : highest parent of x
 union(x, y): connect x to y
 </pre>
 
-<p>Below, I summarized a list of union-find algorithm questions and answers from Leetcode to help you better understand the topic. Happy coding!&#128516;</p>
+<p>It's important to note that the Find and Union operations are closely related, and they are often used together in algorithms that involve connectivity. Below, I summarized a list of union-find algorithm questions and answers from Leetcode to help you better understand the topic. Happy coding!&#128516;</p>
 
 <p class="text-center text-muted"><a href="https://leetcode.com/problems/redundant-connection/" target="_blank">https://leetcode.com/problems/redundant-connection/</a></p> 
 <pre>
