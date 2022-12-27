@@ -309,6 +309,38 @@ class Solution:
       return n - sum(k == v for k, v in f.items())
 </pre>
 
+<p class="text-center text-muted"><a href="https://leetcode.com/problems/minimize-hamming-distance-after-swap-operations/" target="_blank">https://leetcode.com/problems/minimize-hamming-distance-after-swap-operations/</a></p> 
+<pre>
+class Solution:
+  def minimumHammingDistance(self, source: List[int], target: List[int], allowedSwaps: List[List[int]]) -> int:
+      n = len(source)
+      f = list(range(n))
+
+      def find(x):
+          if f[x] != x: f[x] = find(f[x])
+          return f[x]
+
+      def union(x, y):
+          f[find(x)] = find(y)
+
+      for u, v in allowedSwaps:
+          union(u, v)
+
+      g = defaultdict(list)
+      for i in range(n):
+          g[find(i)].append(i)
+          
+      ans = 0
+      for v in g.values():
+          freq = defaultdict(int)
+          for idx in v:
+              freq[target[idx]] += 1
+              freq[source[idx]] -= 1
+          ans += sum(abs(x) for x in freq.values()) // 2
+
+      return ans
+</pre>
+
 </div>
       </div>
     </div>
