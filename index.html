@@ -394,6 +394,38 @@ class Solution:
               if find(i) != find(j): return False
       return True
 </pre>
+
+<p class="text-center text-muted"><a href="https://leetcode.com/problems/min-cost-to-connect-all-points/" target="_blank">https://leetcode.com/problems/min-cost-to-connect-all-points/</a></p> 
+<pre>
+class Solution:
+  def minCostConnectPoints(self, points: List[List[int]]) -> int:
+      d = []
+      for u, v in combinations(points, 2):
+          d.append([abs(u[0] - v[0]) + abs(u[1] - v[1]), str(u), str(v)])
+
+      d.sort()
+
+      f = {}
+      def find(x):
+          if f[x] != x: f[x] = find(f[x])
+          return f[x]
+
+      def union(x, y):
+          f[find(x)] = find(y)
+
+      for w, u, v in d:
+          f[u] = u
+          f[v] = v
+          
+      ans = 0
+      for w, u, v in d:
+          if find(u) != find(v):
+              union(u, v)
+              ans += w
+
+      return ans
+</pre>
+
 </div>
       </div>
     </div>
