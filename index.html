@@ -531,6 +531,40 @@ class Solution:
       return ''.join(ans)
 </pre>
 
+<p class="text-center text-muted"><a href="https://leetcode.com/problems/synonymous-sentences/" target="_blank">https://leetcode.com/problems/synonymous-sentences/</a></p> 
+<pre>
+class Solution:
+  def generateSentences(self, synonyms: List[List[str]], text: str) -> List[str]:
+      f = {}
+
+      def find(x):
+          if f[x] != x: f[x] = find(f[x])
+          return f[x]
+
+      def union(x, y):
+          f[find(x)] = find(y)
+
+      for u, v in synonyms:
+          if u not in f: f[u] = u
+          if v not in f: f[v] = v
+          union(u, v)
+
+      mp = defaultdict(list)
+      for x in f: mp[find(x)].append(x)
+      s = text.split()
+      ans = [s[::]]
+      
+      for i in range(len(s)):
+          if s[i] in f:
+              nxt = []
+              for w in ans:
+                  for v in mp[find(s[i])]:
+                      w[i] = v
+                      nxt.append(w[::])
+              ans = nxt
+      return sorted(' '.join(x) for x in ans)
+</pre>
+
 </div>
       </div>
     </div>
