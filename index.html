@@ -450,6 +450,31 @@ class Solution:
       return len(set(find(s) for s in strs))
 </pre>
 
+<p class="text-center text-muted"><a href="https://leetcode.com/problems/accounts-merge/" target="_blank">https://leetcode.com/problems/accounts-merge/</a></p> 
+<pre>
+class Solution:
+  def accountsMerge(self, accounts: List[List[str]]) -> List[List[str]]:
+      def find(x):
+          if f[x] != x: f[x] = find(f[x])
+          return f[x]
+
+      def union(x, y):
+          f[find(x)] = find(y)
+
+      f, emailToName = {}, {}
+      for account in accounts:
+          name = account[0]
+          for email in account[1:]:
+              if email not in f: f[email] = email
+              union(email, account[1])
+              emailToName[email] = name
+
+      ans = defaultdict(list)
+      for email in f: ans[find(email)].append(email)
+
+      return [[emailToName[root]] + sorted(email) for root, email in ans.items()]
+</pre>
+
 </div>
       </div>
     </div>
