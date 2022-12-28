@@ -475,6 +475,33 @@ class Solution:
       return [[emailToName[root]] + sorted(email) for root, email in ans.items()]
 </pre>
 
+<p class="text-center text-muted"><a href="https://leetcode.com/problems/lexicographically-smallest-equivalent-string/" target="_blank">https://leetcode.com/problems/lexicographically-smallest-equivalent-string/</a></p> 
+<pre>
+class Solution:
+  def smallestEquivalentString(self, s1: str, s2: str, baseStr: str) -> str:
+      f = {}
+      def find(x):
+          if f[x] != x: f[x] = find(f[x])
+          return f[x]
+      
+      def union(x, y):
+          f[find(x)] = find(y)
+
+      for u, v in zip(s1, s2):
+          if u not in f: f[u] = u
+          if v not in f: f[v] = v
+          union(u, v)
+
+      mp = defaultdict(lambda: 'z')
+      for s in f: mp[find(s)] = min(mp[find(s)], s)
+
+      base = list(baseStr)
+      for i in range(len(base)):
+          if base[i] in f: base[i] = mp[find(base[i])]
+      
+      return ''.join(base)
+</pre>
+
 </div>
       </div>
     </div>
