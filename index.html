@@ -366,6 +366,34 @@ class Solution:
           if e[1] == "!" and find(e[0]) == find(e[3]): return False
       return True
 </pre>
+
+<p class="text-center text-muted"><a href="https://leetcode.com/problems/sentence-similarity-ii/" target="_blank">https://leetcode.com/problems/sentence-similarity-ii/</a></p> 
+<pre>
+class Solution:
+  def areSentencesSimilarTwo(self, sentence1: List[str], sentence2: List[str], similarPairs: List[List[str]]) -> bool:
+      f = {}
+      if len(sentence1) != len(sentence2): return False
+      
+      def find(x):
+          if f[x] != x: f[x] = find(f[x])
+          return f[x]
+
+      def union(x, y):
+          f[find(x)] = find(y)
+
+      for u, v in similarPairs:
+          f[u] = u
+          f[v] = v
+
+      for u, v in similarPairs:
+          union(u, v)
+
+      for i, j in zip(sentence1, sentence2):
+          if i != j:
+              if i not in f or j not in f: return False
+              if find(i) != find(j): return False
+      return True
+</pre>
 </div>
       </div>
     </div>
