@@ -426,6 +426,30 @@ class Solution:
       return ans
 </pre>
 
+<p class="text-center text-muted"><a href="https://leetcode.com/problems/similar-string-groups/" target="_blank">https://leetcode.com/problems/similar-string-groups/</a></p> 
+<pre>
+class Solution:
+  def numSimilarGroups(self, strs: List[str]) -> int:
+      f = {}
+      def find(x):
+          if f[x] != x: f[x] = find(f[x])
+          return f[x]
+      
+      def union(u, v):
+          f[find(u)] = find(v)
+
+      def isSimilar(x, y):
+          return sum(u != v for u, v in zip(x, y)) <= 2
+      
+      for s in strs:
+          f[s] = s
+
+      for u, v in combinations(strs, 2):
+          if isSimilar(u, v): union(u, v)
+      
+      return len(set(find(s) for s in strs))
+</pre>
+
 </div>
       </div>
     </div>
